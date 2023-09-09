@@ -16,7 +16,7 @@ class LocationCreate extends Component
     public $latitude;
     public $longitude;
     public $editMode = false; // Menentukan apakah dalam mode "edit"
-    public $showMode = false; // Menentukan apakah dalam mode "edit"
+    public $showMode = false; // Menentukan apakah dalam mode "show"
 
 
     public function mount()
@@ -48,6 +48,8 @@ class LocationCreate extends Component
     }
     public function save()
     {
+        // Simulasi delay 2 detik
+        sleep(2);
         if (!$this->editMode) {
             $validate = $this->validate([
                 'location_name' => 'required|min:3|max:100',

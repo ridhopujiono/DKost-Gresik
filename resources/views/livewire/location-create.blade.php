@@ -13,7 +13,7 @@
             <form wire:submit.prevent="save">
                 <div class="form-group mb-3">
                     <label for="location_name" class="form-label">Nama Lokasi</label>
-                    <input wire:model='location_name' type="text"
+                    <input {{ $showMode ? 'disabled' : '' }} wire:model='location_name' type="text"
                         class="form-control @error('location_name') is-invalid @enderror" name="location_name"
                         value="{{ $location_name }}" />
                     @error('location_name')
@@ -22,8 +22,8 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="address" class="form-label">Alamat Lengkap</label>
-                    <textarea wire:model='address' class="form-control @error('address') is-invalid @enderror" name="address"
-                        value="{{ $address }}">$address</textarea>
+                    <textarea {{ $showMode ? 'disabled' : '' }} wire:model='address'
+                        class="form-control @error('address') is-invalid @enderror" name="address" value="{{ $address }}">$address</textarea>
                     @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -34,9 +34,9 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="latitudeInput" class="form-label">Latitude </label>
-                    <input wire:model='latitude' disabled step='any' type="text"
-                        class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitudeInput"
-                        value="{{ $latitude }}" />
+                    <input {{ $showMode ? 'disabled' : '' }} wire:model='latitude' disabled step='any'
+                        type="text" class="form-control @error('latitude') is-invalid @enderror" name="latitude"
+                        id="latitudeInput" value="{{ $latitude }}" />
                     @error('latitude')
                         <div class="invalid-feedback">{{ $message }}
                         </div>
@@ -44,21 +44,20 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="longitude" class="form-label">Longitude </label>
-                    <input wire:model='longitude' disabled step='any' type="text"
-                        class="form-control @error('longitude') is-invalid @enderror" name="longitude"
+                    <input {{ $showMode ? 'disabled' : '' }} wire:model='longitude' disabled step='any'
+                        type="text" class="form-control @error('longitude') is-invalid @enderror" name="longitude"
                         id="longitudeInput" value="{{ $longitude }}" />
                     @error('longitude')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ url('location') }}" class="btn btn-light border"><span
+                    <a href="{{ url('locations') }}" class="btn btn-light border"><span
                             class="bx bx-chevron-left"></span>Kembali
                     </a>
                     @if (!$showMode)
-                        <button type="submit" class="btn btn-primary" wire:loading.class='btn-secondary'
-                            wire:loading.remove='btn-primary' wire:.loading.delay.longest>Simpan <span
-                                class="bx bx-save"></span>
+                        <button type="submit" class="btn btn-primary" wire:loading.attr='disabled'
+                            wire:.loading.delay.longest>Simpan <span class="bx bx-save"></span>
                         </button>
                     @endif
                 </div>
@@ -69,7 +68,7 @@
         @livewireScripts
         <!-- Make sure you put this AFTER Leaflet's CSS -->
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>\
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script>
             // initialize the map on the "map" div with a given center and zoom
             var map = L.map('map', {

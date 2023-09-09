@@ -13,7 +13,7 @@
             <h4 class="card-title">{{ $sub_title }}</h4>
         </div>
         <div class="col-6">
-            <a class="btn btn-primary float-end" href="{{ url('locations/create') }}">Entri Data <span
+            <a class="btn btn-primary float-end" href="{{ url('facilities/create') }}">Entri Data <span
                     class="bx bx-plus"></span></a>
         </div>
     </div>
@@ -23,8 +23,7 @@
                 <thead>
                     <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Nama Lokasi</th>
-                        <th scope="col">Alamat</th>
+                        <th scope="col">Nama Fasilitas</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -42,7 +41,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ url('locations') }}',
+                    url: '{{ url('facilities') }}',
                     type: 'GET',
                 },
                 columns: [{
@@ -55,12 +54,8 @@
                         }
                     },
                     {
-                        data: 'location_name',
-                        name: 'location_name'
-                    },
-                    {
-                        data: 'address',
-                        name: 'address'
+                        data: 'facility_name',
+                        name: 'facility_name'
                     },
                     {
                         data: 'action',

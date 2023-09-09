@@ -26,31 +26,26 @@
             <span class="menu-header-text">Manajemen Kost</span>
         </li>
         <!-- Lokasi -->
-        <li class="menu-item {{ url('location') ? 'active' : '' }}">
-            <a href="{{ url('location') }}" class="menu-link">
+        <li class="menu-item {{ Request::is('locations') || Request::is('locations/*') ? 'active' : '' }}">
+            <a href="{{ url('locations') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-location-plus"></i>
                 <div data-i18n="Lokasi">Lokasi</div>
             </a>
         </li>
 
         <!-- Kamar -->
-        <li class="menu-item">
+        <li class="menu-item {{ Request::is('rooms/*') || Request::is('residents/*') ? 'open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-bed"></i>
                 <div data-i18n="Kamar">Kamar</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item {{ Request::is('rooms/*') ? 'active' : '' }}">
                     <a href="" class="menu-link">
                         <div data-i18n="Entri Data Kamar">Entri Data Kamar</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="Entri Data Pelengkap Kamar">Entri Data Pelengkap Kamar</div>
-                    </a>
-                </li>
-                <li class="menu-item">
+                <li class="menu-item {{ Request::is('residents/*') ? 'active' : '' }}">
                     <a href="" class="menu-link">
                         <div data-i18n="Report Profil Penghuni">Report Profil Penghuni</div>
                     </a>
@@ -59,8 +54,8 @@
         </li>
 
         <!-- Fasilitas -->
-        <li class="menu-item">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ Request::is('facilities') || Request::is('facilities/*') ? 'active' : '' }}">
+            <a href="{{ url('facilities') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bath"></i>
                 <div data-i18n="Fasilitas">Fasilitas</div>
             </a>

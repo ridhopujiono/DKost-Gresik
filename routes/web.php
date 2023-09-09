@@ -5,7 +5,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\RoomFacilityController;
+use App\Http\Controllers\FacilityController;
 use App\Models\LatePaymentNotification;
 use Illuminate\Support\Facades\Route;
 
@@ -23,10 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('location', LocationController::class);
-Route::resource('rooms/master', RoomController::class);
-Route::resource('resident', ResidentController::class);
-Route::resource('facility', RoomFacilityController::class);
-Route::resource('payment', PaymentController::class);
-Route::resource('payment/late', LatePaymentNotification::class);
-Route::resource('waiting_list', GuestWaitingListController::class);
+Route::resource('locations', LocationController::class);
+Route::resource('rooms', RoomController::class);
+Route::resource('residents', ResidentController::class);
+Route::resource('facilities', FacilityController::class);
+Route::resource('payments', PaymentController::class);
+Route::resource('payment/lates', LatePaymentNotification::class);
+Route::resource('waiting_lists', GuestWaitingListController::class);

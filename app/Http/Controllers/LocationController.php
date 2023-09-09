@@ -18,8 +18,8 @@ class LocationController extends Controller
             return datatables()->of($locations)
                 ->addColumn('action', function ($location) {
                     return '<div class="flex">
-                        <a href="' . url('location') . '/' . $location->id . '/edit" class="btn px-2 bg-light border"><span class="bx bx-pencil"></span></a>
-                        <a href="' . url('location') . '/' . $location->id . '" class="btn px-2 bg-warning"><span class="bx bx-show"></span></a>
+                        <a href="' . url('locations') . '/' . $location->id . '/edit" class="btn px-2 bg-light border"><span class="bx bx-pencil"></span></a>
+                        <a href="' . url('locations') . '/' . $location->id . '" class="btn px-2 bg-warning"><span class="bx bx-show"></span></a>
                         <button onclick="showConfirmation(' . $location->id . ')" class="btn px-2 btn-danger"><span class="bx bx-trash"></span></button>
                     </div>';
                 })
