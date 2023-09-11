@@ -34,19 +34,20 @@
         </li>
 
         <!-- Kamar -->
-        <li class="menu-item {{ Request::is('rooms/*') || Request::is('residents/*') ? 'open' : '' }}">
+        <li
+            class="menu-item {{ Request::is('rooms') || Request::is('rooms/*') || Request::is('residents') || Request::is('residents/*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-bed"></i>
                 <div data-i18n="Kamar">Kamar</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ Request::is('rooms/*') ? 'active' : '' }}">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Request::is('rooms') || Request::is('rooms/*') ? 'active' : '' }}">
+                    <a href="{{ url('rooms') }}" class="menu-link">
                         <div data-i18n="Entri Data Kamar">Entri Data Kamar</div>
                     </a>
                 </li>
                 <li class="menu-item {{ Request::is('residents/*') ? 'active' : '' }}">
-                    <a href="" class="menu-link">
+                    <a href="{{ url('resident') }}" class="menu-link">
                         <div data-i18n="Report Profil Penghuni">Report Profil Penghuni</div>
                     </a>
                 </li>
