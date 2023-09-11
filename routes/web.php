@@ -29,4 +29,4 @@ Route::resource('residents', ResidentController::class);
 Route::resource('facilities', FacilityController::class);
 Route::resource('payments', PaymentController::class);
 Route::resource('payment/lates', LatePaymentNotification::class);
-Route::resource('waiting_lists', GuestWaitingListController::class);
+Route::resource('guests', GuestWaitingListController::class);

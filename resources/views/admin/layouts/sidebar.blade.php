@@ -34,8 +34,7 @@
         </li>
 
         <!-- Kamar -->
-        <li
-            class="menu-item {{ Request::is('rooms') || Request::is('rooms/*') || Request::is('residents') || Request::is('residents/*') ? 'open active' : '' }}">
+        <li class="menu-item {{ Request::is('rooms') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-bed"></i>
                 <div data-i18n="Kamar">Kamar</div>
@@ -46,11 +45,6 @@
                         <div data-i18n="Entri Data Kamar">Entri Data Kamar</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Request::is('residents/*') ? 'active' : '' }}">
-                    <a href="{{ url('resident') }}" class="menu-link">
-                        <div data-i18n="Report Profil Penghuni">Report Profil Penghuni</div>
-                    </a>
-                </li>
             </ul>
         </li>
 
@@ -59,6 +53,13 @@
             <a href="{{ url('facilities') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bath"></i>
                 <div data-i18n="Fasilitas">Fasilitas</div>
+            </a>
+        </li>
+        <!-- Penghuni -->
+        <li class="menu-item {{ Request::is('residents') || Request::is('residents/*') ? 'active' : '' }}">
+            <a href="{{ url('residents') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-check"></i>
+                <div data-i18n="Penghuni">Penghuni</div>
             </a>
         </li>
         <li class="menu-header small text-uppercase">
@@ -73,17 +74,12 @@
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="" class="menu-link">
-                        <div data-i18n="Report Pembayaran">Report Pembayaran</div>
+                        <div data-i18n="Report Pembayaran">Pembayaran</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="" class="menu-link">
                         <div data-i18n="Telat Pembayaran">Telat Pembayaran</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="Notifikasi Telat Bayar">Notifikasi Telat Bayar</div>
                     </a>
                 </li>
             </ul>
@@ -92,8 +88,8 @@
             <span class="menu-header-text">Guest</span>
         </li>
         <!-- List Tunggu Guest -->
-        <li class="menu-item">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ Request::is('guests') || Request::is('guests/*') ? 'active' : '' }}">
+            <a href="{{ url('guests') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div data-i18n="List Tunggu Guest">List Tunggu Guest</div>
             </a>

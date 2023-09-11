@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
+        "jenssegers/date": "^4.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
