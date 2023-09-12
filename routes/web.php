@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('locations');
 });
 Route::resource('locations', LocationController::class);
 Route::resource('rooms', RoomController::class);
