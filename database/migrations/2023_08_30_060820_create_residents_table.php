@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact', 20);
             $table->text('emergency_info');
-            $table->timestamp('contract_start');
-            $table->timestamp('contract_end');
+            $table->timestamp('contract_start')->nullable();
+            $table->timestamp('contract_end')->nullable();
             $table->string('payment_status', 20);
             $table->timestamps();
 
