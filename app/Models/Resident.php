@@ -31,11 +31,12 @@ class Resident extends Model
     public function updateLateStatus()
     {
         // Implementasi logika untuk memperbarui StatusTelat
-        $start_date = new Carbon($this->contract_start);
-        $end_date = new Carbon($this->contract_end);
+        $current_date = Carbon::now();
+        $end_date = Carbon::parse($this->contract_end);
 
-        if ($start_date->greaterThan($end_date)) {
-            if ($this->payment_status == 'belum_lunas' && $this->late_status == 0) {
+        if ($current_date->greaterThan($end_date)) {
+            if ($this->late_status == 0) {
+                $this->update(['payment_status' => 'belum_lunas']);
                 $this->update(['late_status' => true]);
             }
         }

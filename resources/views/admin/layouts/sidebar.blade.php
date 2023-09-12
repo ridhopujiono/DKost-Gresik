@@ -34,7 +34,8 @@
         </li>
 
         <!-- Kamar -->
-        <li class="menu-item {{ Request::is('rooms') ? 'open active' : '' }}">
+        <li
+            class="menu-item {{ Request::is('rooms') || Request::is('rooms/*') || Request::is('room/media') || Request::is('room/media/*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-bed"></i>
                 <div data-i18n="Kamar">Kamar</div>
@@ -43,6 +44,11 @@
                 <li class="menu-item {{ Request::is('rooms') || Request::is('rooms/*') ? 'active' : '' }}">
                     <a href="{{ url('rooms') }}" class="menu-link">
                         <div data-i18n="Entri Data Kamar">Entri Data Kamar</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Request::is('room/media') || Request::is('room/media/*') ? 'active' : '' }}">
+                    <a href="{{ url('room/media') }}" class="menu-link">
+                        <div data-i18n="Entri Data Media Kamar">Entri Data Media Kamar</div>
                     </a>
                 </li>
             </ul>
@@ -66,14 +72,14 @@
             <span class="menu-header-text">Manajemen Pembayaran</span>
         </li>
         <!-- Manajemen Pembayaran -->
-        <li class="menu-item">
+        <li class="menu-item {{ Request::is('payments') || Request::is('payments/*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dollar"></i>
                 <div data-i18n="Manajemen Pembayaran">Pembayaran</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Request::is('payments') || Request::is('payments/*') ? 'active' : '' }}">
+                    <a href="{{ url('payments') }}" class="menu-link">
                         <div data-i18n="Report Pembayaran">Pembayaran</div>
                     </a>
                 </li>

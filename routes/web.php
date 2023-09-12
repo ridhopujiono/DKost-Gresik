@@ -6,6 +6,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\RoomMediaController;
 use App\Models\LatePaymentNotification;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::get('/', function () {
 });
 Route::resource('locations', LocationController::class);
 Route::resource('rooms', RoomController::class);
+Route::resource('room/media', RoomMediaController::class);
 Route::resource('residents', ResidentController::class);
 Route::resource('facilities', FacilityController::class);
 Route::resource('payments', PaymentController::class);

@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Payment;
 use App\Models\Resident;
 use Livewire\Component;
 
-class ResidentTable extends Component
+class PaymentTable extends Component
 {
     public $data;
     public $sub_title;
@@ -14,13 +13,12 @@ class ResidentTable extends Component
 
     public function render()
     {
-        return view('livewire.resident-table');
+        return view('livewire.payment-table');
     }
 
     public function delete($residentId)
     {
         try {
-            Payment::where('resident_id', $residentId)->delete();
             Resident::find($residentId)->delete();
             $this->emit('needRefresh');
             session()->flash('success', 'Berhasil menghapus item');

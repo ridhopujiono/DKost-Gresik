@@ -70,27 +70,33 @@
                         },
                         {
                             data: 'room.room_name',
-                            name: 'room_name'
+                            name: 'room_name',
+                            searchable: true
                         },
                         {
                             data: 'name',
-                            name: 'name'
+                            name: 'name',
+                            searchable: true
                         },
                         {
                             data: 'contact',
-                            name: 'contact'
+                            name: 'contact',
+                            searchable: true
                         },
                         {
                             data: 'contract_start',
-                            name: 'contract_start'
+                            name: 'contract_start',
+                            searchable: true
                         },
                         {
                             data: 'contract_end',
-                            name: 'contract_end'
+                            name: 'contract_end',
+                            searchable: true
                         },
                         {
                             data: 'rental_period',
-                            name: 'rental_period'
+                            name: 'rental_period',
+                            searchable: true
                         },
                         {
                             data: 'payment_status',
@@ -98,7 +104,8 @@
                             render: function(data) {
                                 return data == 'lunas' ? `<span class="badge bg-success text-white">Lunas</span>` :
                                     `<span class="badge bg-danger text-white">Belum Lunas</span>`
-                            }
+                            },
+                            searchable: true
                         },
                         {
                             data: 'late_status',
@@ -106,7 +113,8 @@
                             render: function(data) {
                                 return data == 0 ? `<span class="badge bg-success text-white">Belum Telat</span>` :
                                     `<span class="badge bg-danger text-white">Telat</span>`
-                            }
+                            },
+                            searchable: true
                         },
                         {
                             data: 'action',

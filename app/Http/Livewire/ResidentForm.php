@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Location;
 use App\Models\Resident;
 use App\Models\Room;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class ResidentForm extends Component
@@ -98,11 +99,12 @@ class ResidentForm extends Component
                     'room_id' => $validate['room_id'],
                     'name' => $validate['name'],
                     'address' => $validate['address'],
+                    'emergency_info' => $validate['emergency_info'],
                     'contact' => $validate['contact'],
                     'contract_start' => $validate['contract_start'],
                     'contract_end' => $validate['contract_end'],
                     'payment_status' => $validate['payment_status'],
-                    'emergency_info' => $validate['emergency_info'],
+                    'late_status' => $validate['payment_status'] == "lunas" ? 0 : 1,
                 ]);
                 session()->flash('success', 'Berhasil simpan data');
                 $this->resetFields();
@@ -113,6 +115,16 @@ class ResidentForm extends Component
             // Logika untuk mode "edit"
             try {
                 $resident = Resident::find($this->residentId);
+
+                $validate['late_status'] = $validate['payment_status'] == "lunas" ? 0 : 1;
+
+                if ($resident['payment_status'] != 'lunas') {
+                    $validate['contract_end'] = $validate['payment_status'] == "lunas" ? Carbon::parse($validate['contract_end'])->addMonth(1) : $validate['contract_end'];
+
+                    $this->contract_end =  Carbon::parse($validate['contract_end'])->format('Y-m-d H:i');
+                }
+
+
                 if ($resident) {
                     $resident->update($validate);
                     session()->flash('success', 'Berhasil mengubah data');
@@ -125,5 +137,9 @@ class ResidentForm extends Component
     public function updatedLocationSelected()
     {
         $this->rooms = Room::where('location_id', $this->locationSelected)->get();
+    }
+    public function updatedContractStart()
+    {
+        $this->contract_end = Carbon::parse($this->contract_start)->addMonth(1)->format('Y-m-d H:i');
     }
 }

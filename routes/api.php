@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestWaitingListController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('guest', [GuestWaitingListController::class, 'post_guest']);
+Route::post('payment', [PaymentController::class, 'post_payment']);
