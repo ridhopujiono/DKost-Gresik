@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('resident_id')->unsigned();
-            $table->timestamp('payment_date');
+            $table->timestamp('payment_date')->nullable();
             $table->decimal('amount', 10, 2);
             $table->string('payment_proof', 255);
             $table->string('verification_status', 20);

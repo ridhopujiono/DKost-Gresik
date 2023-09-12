@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('resident_id')->unsigned();
-            $table->timestamp('complaint_date');
+            $table->timestamp('complaint_date')->nullable();
             $table->text('complaint_content');
             $table->timestamps();
 

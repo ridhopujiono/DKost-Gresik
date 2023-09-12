@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('resident_id')->unsigned();
-            $table->timestamp('testimonial_date');
+            $table->timestamp('testimonial_date')->nullable();
             $table->text('testimonial_content');
             $table->timestamps();
 

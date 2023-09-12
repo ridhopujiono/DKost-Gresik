@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('late_payment_notifications', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('resident_id')->unsigned();
-            $table->timestamp('notification_date');
+            $table->timestamp('notification_date')->nullable();
             $table->text('notification_content');
             $table->string('read_status', 5);
             $table->timestamps();
