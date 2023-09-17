@@ -6,6 +6,7 @@
 
     @include('admin.layouts.toast_flash_message')
 
+
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="card">

@@ -13,8 +13,8 @@
             <h4 class="card-title">{{ $sub_title }}</h4>
         </div>
         <div class="col-6">
-            <a class="btn btn-primary float-end" href="{{ url('residents/create') }}">Entri Data <span
-                    class="bx bx-plus"></span></a>
+            {{-- <a class="btn btn-primary float-end" href="{{ url('residents/create') }}">Entri Data <span
+                    class="bx bx-plus"></span></a> --}}
         </div>
         <div class="d-flex w-100 mt-3" style="
                 padding: 0;
@@ -22,7 +22,7 @@
             <div class="alert bg-info text-white w-100">Ini adalah report Penghuni Kos, apabila guest sudah
                 melakukan booking
                 akan
-                masuk ke Penghuni Kos. Namun anda juga bisa menambah, edit dan hapus secara manual.</span>
+                masuk ke Penghuni Kos.</span>
             </div>
         </div>
         <div wire:ignore class="card">

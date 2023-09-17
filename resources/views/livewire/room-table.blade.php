@@ -3,16 +3,18 @@
         @livewireStyles
         <link
             href="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/r-2.5.0/datatables.min.css"
-            rel="stylesheet">
-    @endpush
-
-    @include('admin.layouts.toast_flash_message')
+            rel="stylesheet" />
+    @endpush @include('admin.layouts.toast_flash_message')
 
     <div class="row justify-content-between align-items-center py-3">
-        <div class="col-6">
+        <div class="col-3">
             <h4 class="card-title">{{ $sub_title }}</h4>
         </div>
-        <div class="col-6">
+        <div class="col">
+            <button type="button" class="btn btn-light shadow-sm ms-2 float-end" data-bs-toggle="modal"
+                data-bs-target="#duplicateForm">
+                Duplikasi Kamar Kos <span class="bx bx-copy"></span>
+            </button>
             <a class="btn btn-primary float-end" href="{{ url('rooms/create') }}">Entri Data <span
                     class="bx bx-plus"></span></a>
         </div>
@@ -30,11 +32,78 @@
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
+
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div wire:ignore.self class="modal fade" id="duplicateForm" tabindex="-1" data-bs-backdrop="static"
+        data-bs-keyboard="false" role="dialog" aria-labelledby="duplicateFormModalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="duplicateFormModalTitleId">
+                        Duplikasi Kamar Kos
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form wire:submit.prevent="save">
+                        <div class="form-group mb-3">
+                            <label id="locations" class="form-label">Pilih Lokasi</label>
+                            <select id="locations" class="form-select @error('locationSelected') is-invalid @enderror"
+                                wire:model='locationSelected'>
+                                <option>SILAHKAN PILIH LOKASI</option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->id }}">
+                                        {{ $location->location_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('locationSelected')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        @if ($locationSelected !== null)
+                            <div class="form-group mb-3">
+                                <label id="rooms" class="form-label">Pilih Kamar</label>
+                                <select id="rooms" class="form-select @error('roomSelected') is-invalid @enderror"
+                                    wire:model='roomSelected'>
+                                    <option>SILAHKAN PILIH KAMAR</option>
+                                    @foreach ($rooms as $room)
+                                        <option value="{{ $room->id }}">
+                                            {{ $room->room_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('roomSelected')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Keluar
+                    </button>
+                    <button class="btn btn-primary" wire:loading.attr="disabled">
+                        Duplikasi
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional: Place to the bottom of scripts -->
+    <script>
+        const myModal = new bootstrap.Modal(
+            document.getElementById("modalId"),
+            options
+        );
+    </script>
     @push('script')
         @livewireScripts
         <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/r-2.5.0/datatables.min.js">

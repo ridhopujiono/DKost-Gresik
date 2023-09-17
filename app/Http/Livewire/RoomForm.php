@@ -7,14 +7,13 @@ use App\Models\Location;
 use App\Models\Room;
 use App\Models\RoomFacility;
 use Livewire\Component;
-use NumberFormatter;
 
 class RoomForm extends Component
 {
     public $locations;
     public $locationSelected;
     public $location_id;
-    public $facility_ids;
+    public $facility_ids = [];
     public $facilities;
     public $facilitySelected = [];
     public $roomId;
@@ -29,7 +28,6 @@ class RoomForm extends Component
     public $roomStatusSelected;
     public $editMode = false; // Menentukan apakah dalam mode "edit"
     public $showMode = false; // Menentukan apakah dalam mode "show"
-
 
     public function mount()
     {
@@ -58,7 +56,6 @@ class RoomForm extends Component
             }
         }
     }
-
 
     public function updatedPrice()
     {
