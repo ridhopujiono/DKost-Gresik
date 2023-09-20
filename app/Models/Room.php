@@ -16,6 +16,7 @@ class Room extends Model
         'capacity',
         'price',
         'stock',
+        'description',
         'room_status'
     ];
     public function location()

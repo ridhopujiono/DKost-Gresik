@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     @if ($facilities)
                         <div class="form-group mb-3">
@@ -123,6 +123,18 @@
                         </div>
                     @endif
 
+
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        <label id="description" class="form-label">Deskripsi Kamar</label>
+                        <textarea wire:model.lazy='description'
+                            class="form-control @error('description')
+                            is-invalid @enderror" id=""
+                            cols="30" rows="3" value='{{ $description }}'>{{ $description }}</textarea>
+                    </div>
                     <div class="d-flex justify-content-between">
                         <a href="{{ url('rooms') }}" class="btn btn-light border"><span
                                 class="bx bx-chevron-left"></span>Kembali

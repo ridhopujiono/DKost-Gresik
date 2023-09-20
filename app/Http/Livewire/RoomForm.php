@@ -24,6 +24,7 @@ class RoomForm extends Component
     public $capacity;
     public $price;
     public $stock;
+    public $description;
     public $room_status;
     public $roomStatusSelected;
     public $editMode = false; // Menentukan apakah dalam mode "edit"
@@ -52,6 +53,7 @@ class RoomForm extends Component
                 $this->capacity = $room->capacity;
                 $this->price = (float) $room->price;
                 $this->stock = $room->stock;
+                $this->description = $room->description;
                 $this->editMode = true;
             }
         }
@@ -85,6 +87,7 @@ class RoomForm extends Component
         $this->capacity = '';
         $this->price = '';
         $this->stock = '';
+        $this->description = '';
     }
     public function save()
     {
@@ -95,11 +98,11 @@ class RoomForm extends Component
             'locationSelected' => 'required',
             'roomTypeSelected' => 'required',
             'roomStatusSelected' => 'required',
-            'facilitySelected' => 'required',
             'room_name' => 'required|min:3|max:100',
             'capacity' => 'required|max:10',
             'price' => 'required|min:3|max:20',
-            'stock' => 'required|max:10'
+            'stock' => 'required|max:10',
+            'description' => 'required',
         ]);
         if (!$this->editMode) {
             try {
@@ -111,6 +114,7 @@ class RoomForm extends Component
                     'capacity' => $validate['capacity'],
                     'price' => str_replace('.', '', $validate['price']),
                     'stock' => $validate['stock'],
+                    'description' => $validate['description'],
                     'room_status' => $validate['roomStatusSelected'],
                 ]);
                 // then insert to room_facility
@@ -137,10 +141,12 @@ class RoomForm extends Component
                         'capacity' => $validate['capacity'],
                         'price' => str_replace('.', '', $validate['price']),
                         'stock' => $validate['stock'],
+                        'description' => $validate['description'],
                         'room_status' => $validate['roomStatusSelected'],
                     ]);
                     RoomFacility::where('room_id', $this->roomId)->delete();
                     // then insert to room_facility
+                    $validate['facilitySelected'] = $this->facilitySelected;
                     foreach ($validate['facilitySelected'] as $facility_id) {
                         RoomFacility::create([
                             "room_id" => $room->id,

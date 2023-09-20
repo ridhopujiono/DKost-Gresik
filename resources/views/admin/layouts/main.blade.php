@@ -17,7 +17,7 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="{{asset('themes/assets/')}}"
+  data-assets-path="{{ asset('themes/assets/') }}"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -27,12 +27,12 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>D'Kost Gresik | {{$title}}</title>
+    <title>D'Kost Gresik | {{ $title }}</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('themes/assets/img/favicon/favicon.ico')}}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('themes/assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,26 +43,26 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{asset('themes/assets/vendor/fonts/boxicons.css')}}" />
+    <link rel="stylesheet" href="{{ asset('themes/assets/vendor/fonts/boxicons.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{asset('themes/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{asset('themes/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{asset('themes/assets/css/demo.css')}}" />
+    <link rel="stylesheet" href="{{ asset('themes/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('themes/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('themes/assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{asset('themes/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+    <link rel="stylesheet" href="{{ asset('themes/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-    <link rel="stylesheet" href="{{asset('themes/assets/vendor/libs/apex-charts/apex-charts.css')}}" />
+    <link rel="stylesheet" href="{{ asset('themes/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{asset('themes/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{ asset('themes/assets/vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{asset('themes/assets/js/config.js')}}"></script>
+    <script src="{{ asset('themes/assets/js/config.js') }}"></script>
     @stack('style')
 
   </head>
@@ -88,7 +88,7 @@
             </div>
             <!-- / Content -->
 
-            @include('admin.layouts.footer')
+            {{-- @include('admin.layouts.footer') --}}
 
             <div class="content-backdrop fade"></div>
           </div>
@@ -102,33 +102,33 @@
     </div>
     <!-- / Layout wrapper -->
 
-    <div class="buy-now">
+    {{-- <div class="buy-now">
       <a
         href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
         target="_blank"
         class="btn btn-danger btn-buy-now"
         >Upgrade to Pro</a
       >
-    </div>
+    </div> --}}
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{asset('themes/assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{asset('themes/assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{asset('themes/assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{asset('themes/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script src="{{ asset('themes/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('themes/assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('themes/assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('themes/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <script src="{{asset('themes/assets/vendor/js/menu.js')}}"></script>
+    <script src="{{ asset('themes/assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="{{asset('themes/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+    <script src="{{ asset('themes/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
     <!-- Main JS -->
-    <script src="{{asset('themes/assets/js/main.js')}}"></script>
+    <script src="{{ asset('themes/assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="{{asset('themes/assets/js/dashboards-analytics.js')}}"></script>
+    <script src="{{ asset('themes/assets/js/dashboards-analytics.js') }}"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

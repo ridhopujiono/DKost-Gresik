@@ -81,41 +81,7 @@
                   </span>
                 </a>
               </div>
-              <!-- /Logo -->
-              <h4 class="mb-2">Login</h4>
-
-              <form id="formAuthentication" class="mb-3" action="" method="POST">
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email-username"
-                    placeholder="Masukan email anda"
-                    autofocus
-                  />
-                </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Kata sandi</label>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder=""
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
-                </div>
-              </form>
+              @livewire('user')
             </div>
           </div>
           <!-- /Register -->
@@ -144,6 +110,6 @@
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js')}}"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>

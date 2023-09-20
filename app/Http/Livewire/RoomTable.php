@@ -36,6 +36,9 @@ class RoomTable extends Component
 
     public function save()
     {
+        if ($this->roomSelected == null) {
+            return session()->flash('error', 'Anda belum memilih kamar yang akan anda duplikasi');
+        }
         $room = Room::find($this->roomSelected);
         $newRoom = $room->replicate();
         $newRoom->created_at = Carbon::now();

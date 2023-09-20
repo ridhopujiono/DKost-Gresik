@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form class="mb-5" wire:submit.prevent="save">
+            <form class="" wire:submit.prevent="save">
 
                 @foreach ($images as $image)
                     @php
@@ -26,10 +26,10 @@
                         </video>
                     @endif
                 @endforeach
-                <div class="form-group mb-3"><button type='button' class="btn btn-primary" wire:click='addFile'>Tambah
+                <div class="form-group"><button type='button' class="btn btn-primary" wire:click='addFile'>Tambah
                         File</button></div>
                 @foreach ($files as $index => $file)
-                    <div class="form-group mb-3">
+                    <div class="form-group mt-3 mb-3">
                         <div class="d-flex justify-content-between gap-2">
                             <input class="form-control" type="file" wire:model="files.{{ $index }}"
                                 width="90%" accept="image/*, video/*" />
