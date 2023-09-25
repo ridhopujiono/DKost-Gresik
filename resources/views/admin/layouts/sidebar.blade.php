@@ -97,7 +97,7 @@
         <li class="menu-item {{ Request::is('guests') || Request::is('guests/*') ? 'active' : '' }}">
             <a href="{{ url('guests') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="List Tunggu Guest">List Tunggu Guest</div>
+                <div data-i18n="List Tunggu Guest">List Pengajuan Kamar</div>
             </a>
         </li>
     </ul>

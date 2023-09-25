@@ -21,3 +21,4 @@ Route::post('guest', [GuestWaitingListController::class, 'post_guest']);
 Route::post('payment', [PaymentController::class, 'post_payment']);
 Route::get('rooms', [RoomController::class, 'getAll']);
 Route::get('rooms/{id}', [RoomController::class, 'getById']);
+Route::post('rooms/reservation/{room_id}/{user_id}/{type}', [RoomController::class, 'reservation']);

@@ -7,8 +7,10 @@ use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\RoomMediaController;
+use App\Mail\SendExampleMail;
 use App\Models\LatePaymentNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -31,14 +33,17 @@ Route::get('/logout', function () {
     Auth::logout();
     return redirect('/')->with('success', 'Anda berhasil keluar. Terimakasih');
 });
+Route::get('/email', function () {
+    return view('email.accept_room_reservation');
+});
 
 Route::middleware(['is_admin'])->group(function () {
-    Route::resource('locations', LocationController::class)->middleware('is_admin');
-    Route::resource('rooms', RoomController::class)->middleware('is_admin');
-    Route::resource('room/media', RoomMediaController::class)->middleware('is_admin');
-    Route::resource('residents', ResidentController::class)->middleware('is_admin');
-    Route::resource('facilities', FacilityController::class)->middleware('is_admin');
-    Route::resource('payments', PaymentController::class)->middleware('is_admin');
-    Route::resource('payment/lates', LatePaymentNotification::class)->middleware('is_admin');
-    Route::resource('guests', GuestWaitingListController::class)->middleware('is_admin');
+    Route::resource('locations', LocationController::class);
+    Route::resource('rooms', RoomController::class);
+    Route::resource('room/media', RoomMediaController::class);
+    Route::resource('residents', ResidentController::class);
+    Route::resource('facilities', FacilityController::class);
+    Route::resource('payments', PaymentController::class);
+    Route::resource('payment/lates', LatePaymentNotification::class);
+    Route::resource('guests', GuestWaitingListController::class);
 });

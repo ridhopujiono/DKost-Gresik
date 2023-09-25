@@ -28,11 +28,15 @@ class ResidentController extends Controller
                 })
                 ->addColumn('rental_period', function ($resident) {
                     if (Date::now()->greaterThan($resident->contract_end)) {
-                        return "Habis";
+                        return "<span class='badge bg-danger'>Habis</span>";
                     } else {
                         return Date::now()->timespan($resident->contract_end);
                     }
                 })
+                ->addColumn('registered_at', function ($resident) {
+                    return Date::parse($resident->created_at)->diffForHumans();
+                })
+                ->rawColumns(['action', 'rental_period'])
                 ->make(true);
         }
         return view('admin.residents.index', [

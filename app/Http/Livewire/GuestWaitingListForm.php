@@ -65,7 +65,9 @@ class GuestWaitingListForm extends Component
             try {
                 $guest = GuestWaitingList::find($this->guestId);
                 if ($guest) {
-                    $guest->update($validate);
+                    if ($validate['status'] == "diterima") {
+                        $guest->update($validate);
+                    }
                     session()->flash('success', 'Berhasil mengubah data');
                 }
             } catch (Exception $e) {

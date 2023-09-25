@@ -10,15 +10,20 @@ class GuestWaitingList extends Model
     use HasFactory;
 
     protected $fillable = [
-        'location_id',
+        'user_id',
+        'room_id',
         'guest_name',
         'guest_contact',
         'request_date',
         'status'
     ];
 
-    public function location()
+    public function user()
     {
-        return $this->belongsTo(Location::class, 'location_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id');
     }
 }

@@ -29,6 +29,8 @@ class ResidentForm extends Component
     public $editMode = false; // Menentukan apakah dalam mode "edit"
     public $showMode = false; // Menentukan apakah dalam mode "edit"
 
+    public $isContractEndChanged = false;
+
 
     public function mount()
     {
@@ -72,6 +74,9 @@ class ResidentForm extends Component
         $this->contract_end = '';
         $this->payment_status = '';
     }
+    public function setContractEndChanged(){
+        $this->isContractEndChanged = true;
+    }
     public function save()
     {
         // Simulasikan pemrosesan yang memerlukan waktu
@@ -92,47 +97,30 @@ class ResidentForm extends Component
             "contact_number" => $validate['contact_number']
         ];
 
-        if (!$this->editMode) {
 
-            try {
-                Resident::create([
-                    'room_id' => $validate['room_id'],
-                    'name' => $validate['name'],
-                    'address' => $validate['address'],
-                    'emergency_info' => $validate['emergency_info'],
-                    'contact' => $validate['contact'],
-                    'contract_start' => $validate['contract_start'],
-                    'contract_end' => $validate['contract_end'],
-                    'payment_status' => $validate['payment_status'],
-                    'late_status' => $validate['payment_status'] == "lunas" ? 0 : 1,
-                ]);
-                session()->flash('success', 'Berhasil simpan data');
-                $this->resetFields();
-            } catch (Exception $e) {
-                session()->flash('error', 'Ada error disisi server. Pesan error: ' . $e->getMessage());
-            }
-        } else {
-            // Logika untuk mode "edit"
-            try {
-                $resident = Resident::find($this->residentId);
+        // Logika untuk mode "edit"
+        try {
+            $resident = Resident::find($this->residentId);
 
-                $validate['late_status'] = $validate['payment_status'] == "lunas" ? 0 : 1;
+            $validate['late_status'] = $validate['payment_status'] == "lunas" ? 0 : 1;
 
-                if ($resident['payment_status'] != 'lunas') {
+            if ($resident['payment_status'] != 'lunas') {
+                if(!$this->isContractEndChanged){
                     $validate['contract_end'] = $validate['payment_status'] == "lunas" ? Carbon::parse($validate['contract_end'])->addMonth(1) : $validate['contract_end'];
-
-                    $this->contract_end =  Carbon::parse($validate['contract_end'])->format('Y-m-d H:i');
                 }
 
-
-                if ($resident) {
-                    $resident->update($validate);
-                    session()->flash('success', 'Berhasil mengubah data');
-                }
-            } catch (Exception $e) {
-                session()->flash('error', 'Ada error disisi server. Pesan error: ' . $e->getMessage());
+                $this->contract_end =  Carbon::parse($validate['contract_end'])->format('Y-m-d H:i');
             }
+
+
+            if ($resident) {
+                $resident->update($validate);
+                session()->flash('success', 'Berhasil mengubah data');
+            }
+        } catch (Exception $e) {
+            session()->flash('error', 'Ada error disisi server. Pesan error: ' . $e->getMessage());
         }
+
     }
     public function updatedLocationSelected()
     {

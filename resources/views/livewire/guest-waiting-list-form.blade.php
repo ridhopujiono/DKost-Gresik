@@ -16,6 +16,9 @@
                         <option>SILAHKAN PILIH STATUS</option>
                         <option {{ $status == 'menunggu' ? 'selected' : '' }} value="menunggu">Menunggu
                         </option>
+                        <option {{ $status == 'full_booked' ? 'selected' : '' }} value="full_booked">Booking saat kamar
+                            penuh
+                        </option>
                         <option {{ $status == 'diterima' ? 'selected' : '' }} value="diterima">Diterima
                         </option>
                     </select>

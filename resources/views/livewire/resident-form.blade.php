@@ -103,16 +103,19 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="contract_end" class="form-label">Tanggal Berakhir (Tenggat Pembayaran)</label>
-                    <input disabled {{ $showMode ? 'disabled' : '' }} wire:model='contract_end' type="text"
-                        class="form-control @error('contract_end') is-invalid @enderror" name="contract_end"
+                    <div class="input-group">
+                        <input {{ !$isContractEndChanged ? 'disabled' : '' }} wire:model='contract_end' type="text"
+                        class="is_date form-control @error('contract_end') is-invalid @enderror" name="contract_end"
                         value="{{ $contract_end }}" />
+                        <div type="button" wire:click="setContractEndChanged" id="editContractEnd" class="btn btn-light border"><span class="bx bx-pencil"></span></div>
+                    </div>
                     @error('contract_end')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
                     <label id="payment_status" class="form-label">Pilih Status Pembayaran</label>
-                    @if ($editMode)
+                    @if (!$isContractEndChanged)
                         <div class="alert alert-warning">Jika anda mengubahnya ke status <b>Lunas</b>, maka tenggat akan
                             bertambah 1 bulan</div>
                     @endif
@@ -149,8 +152,7 @@
             $(".is_date").flatpickr({
                 enableTime: true,
                 time_24hr: true,
-                minDate: "today",
-                dateFormat: "Y-m-d H:i",
+                dateFormat: "Y-m-d H:i"
             });
         </script>
     @endpush

@@ -8,42 +8,14 @@ use Illuminate\Http\Request;
 
 class GuestWaitingListController extends Controller
 {
-    protected $title = "Guest | List Tunggu Guest";
-    protected $sub_title = "List Tunggu Guest";
+    protected $title = "Kamar | List Pengajuan Kamar";
+    protected $sub_title = "List Pengajuan Kamar";
 
-    public function post_guest(Request $request)
-    {
-        try {
-            $insert = GuestWaitingList::create([
-                "location_id" => $request->post('location_id'),
-                "guest_name" => $request->post('guest_name'),
-                "guest_contact" => $request->post('guest_contact'),
-                "request_date" => $request->post('request_date'),
-                "status" => "menunggu",
-            ]);
-            if ($insert) {
-                return response()->json([
-                    "status" => 200,
-                    "message" => "success"
-                ], 200);
-            } else {
-                return response()->json([
-                    "status" => 400,
-                    "message" => "error"
-                ], 400);
-            }
-        } catch (Exception $e) {
-            return response()->json([
-                "status" => 500,
-                "message" => $e->getMessage()
-            ], 500);
-        }
-    }
 
     public function index()
     {
         if (request()->ajax()) {
-            $guests = GuestWaitingList::with('location')->orderBy('created_at', 'asc')->get();
+            $guests = GuestWaitingList::with('room')->orderBy('created_at', 'asc')->get();
 
             return datatables()->of($guests)
                 ->addColumn('action', function ($guest) {
@@ -69,7 +41,6 @@ class GuestWaitingListController extends Controller
     }
     public function edit($id)
     {
-
         return view('admin.guests.create', [
             "title" => $this->title,
             "sub_title" => "Edit " . $this->sub_title,

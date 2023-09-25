@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\GuestWaitingList;
 use App\Models\Room;
 use Exception;
 use Illuminate\Http\Request;
@@ -42,6 +43,41 @@ class RoomController extends Controller
 
             return response()->json($room);
         } catch (Exception $e) {
+            return response()->json([
+                "success" => false,
+                "data" => $e->getMessage()
+            ]);
+        }
+    }
+    public function reservation(Request $request, $room_id, $user_id, $type = "booking") // $type = "booking", "full_booked"
+    {
+        try {
+            $guest_waiting_lists = GuestWaitingList::where('user_id', $user_id)
+                ->where('room_id', $room_id)
+                ->whereIn('status', ['menunggu', 'full_booked'])
+                ->get();
+
+            if (count($guest_waiting_lists) > 0) {
+                return response()->json([
+                    "success" => false,
+                    "data" => "Maaf anda sudah mengajukan pemesanan kamar ini"
+                ]);
+            } else {
+                $save = GuestWaitingList::create([
+                    'user_id' => $user_id,
+                    'room_id' => $room_id,
+                    'guest_name' => $request->input('guest_name'),
+                    'guest_contact' => $request->input('phone'),
+                    'request_date' => $request->input('request_date'),
+                    'status' => $type == "booking" ? "menunggu" : "full_booked"
+                ]);
+
+                return response()->json([
+                    "success" => true,
+                    "data" => $type == "booking" ? "Berhasil mengajukan kamar. Anda melihat status pengajuan kamar di menu Kamar Saya" : "Terimakasih, Anda akan dihubungi jika kamar sudah tersedia"
+                ]);
+            }
+        } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
                 "data" => $e->getMessage()

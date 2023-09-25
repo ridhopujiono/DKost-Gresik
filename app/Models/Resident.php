@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Mail\LateNotificationMail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class Resident extends Model
 {
@@ -19,7 +21,8 @@ class Resident extends Model
         'contract_start',
         'contract_end',
         'payment_status',
-        'late_status'
+        'late_status',
+        'user_id'
     ];
     protected $casts = [
         'emergency_info' => 'array', // Kolom 'emergency_info' akan di-cast menjadi tipe array
@@ -27,6 +30,10 @@ class Resident extends Model
     public function room()
     {
         return $this->belongsTo(Room::class, 'room_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function updateLateStatus()
     {
@@ -38,6 +45,15 @@ class Resident extends Model
             if ($this->late_status == 0) {
                 $this->update(['payment_status' => 'belum_lunas']);
                 $this->update(['late_status' => true]);
+
+                LatePaymentNotification::create([
+                    'resident_id' => $this->id,
+                    'notification_date' => Carbon::now(),
+                    'notification_content' => "Telat Pembayaran Kamar <b>" . $this->room->room_name . "<b>",
+                    'read_status' => false,
+                ]);
+
+                Mail::to($this->user->email)->send(new LateNotificationMail($this->room->room_name));
             }
         }
     }
