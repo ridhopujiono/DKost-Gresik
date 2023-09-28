@@ -8,7 +8,6 @@ use App\Models\GuestWaitingList;
 use App\Models\Room;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class RoomController extends Controller
 {
@@ -73,14 +72,13 @@ class RoomController extends Controller
                     'request_date' => $request->input('request_date'),
                     'status' => $type == "booking" ? "menunggu" : "full_booked"
                 ]);
-                $user = User::find($user_id);
 
                 $email_argument = [
                     'email' => env('MAIL_USERNAME'),
-                    'subject' => 'Permintaan Booking Kamar ' . $type == "booking" ? "(Kamar Tersedia)" : "(Kamar Penuh)",
-                    'body' => 'Halo Admin, ada permintaan Booking Kamar, ' . $type == "booking" ? "dengan status : Tersedia)" : "namun status kamar : Penuh",
+                    'subject' => 'Permintaan Booking Kamar ' . ($type == "booking" ? "(Kamar Tersedia)" : "(Kamar Penuh)"),
+                    'body' => 'Halo Admin, ada permintaan Booking Kamar, ' . ($type == "booking" ? "dengan status : Tersedia" : "namun status kamar : Penuh"),
                 ];
-                dispatch(new SendNotificationBookingRoomJob($email_argument));
+                dispatch(new SendNotificationBookingRoomJob($email_argument['email'], $email_argument['subject'], $email_argument['body']));
 
                 return response()->json([
                     "success" => true,

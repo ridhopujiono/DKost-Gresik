@@ -6,11 +6,10 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\LateNotificationController;
 use App\Http\Controllers\RoomMediaController;
-use App\Mail\SendExampleMail;
 use App\Models\LatePaymentNotification;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -46,4 +45,5 @@ Route::middleware(['is_admin'])->group(function () {
     Route::resource('payments', PaymentController::class);
     Route::resource('payment/lates', LatePaymentNotification::class);
     Route::resource('guests', GuestWaitingListController::class);
+    Route::resource('notifications', LateNotificationController::class);
 });

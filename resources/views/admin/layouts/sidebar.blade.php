@@ -72,23 +72,18 @@
             <span class="menu-header-text">Manajemen Pembayaran</span>
         </li>
         <!-- Manajemen Pembayaran -->
-        <li class="menu-item {{ Request::is('payments') || Request::is('payments/*') ? 'open active' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <li class="menu-item {{ Request::is('payments') || Request::is('payments/*') ? 'active' : '' }}">
+            <a href="{{ url('payments') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dollar"></i>
-                <div data-i18n="Manajemen Pembayaran">Pembayaran</div>
+                <div data-i18n="Pembayaran">Pembayaran</div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Request::is('payments') || Request::is('payments/*') ? 'active' : '' }}">
-                    <a href="{{ url('payments') }}" class="menu-link">
-                        <div data-i18n="Report Pembayaran">Pembayaran</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <div data-i18n="Telat Pembayaran">Telat Pembayaran</div>
-                    </a>
-                </li>
-            </ul>
+        </li>
+        <!-- Manajemen Pembayaran -->
+        <li class="menu-item {{ Request::is('notifications') || Request::is('notifications/*') ? 'active' : '' }}">
+            <a href="{{ url('notifications') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-bell"></i>
+                <div data-i18n="Notifikasi Telat Pembayaran">Notifikasi Telat</div>
+            </a>
         </li>
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Guest</span>

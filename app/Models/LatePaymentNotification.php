@@ -15,4 +15,9 @@ class LatePaymentNotification extends Model
         'notification_content',
         'read_status'
     ];
+
+    public function resident()
+    {
+        return $this->belongsTo(Resident::class, 'resident_id');
+    }
 }

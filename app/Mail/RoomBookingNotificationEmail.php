@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,15 +12,17 @@ class RoomBookingNotificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $subject;
+    public $body;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($subject, $body)
     {
-        $this->data = $data;
+        $this->subject = $subject;
+        $this->body = $body;
     }
 
     /**
@@ -32,7 +33,7 @@ class RoomBookingNotificationEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: $this->data['subject'],
+            subject: $this->subject,
         );
     }
 
