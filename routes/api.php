@@ -34,3 +34,5 @@ Route::post('resident/payment_histories/resident_id/{resident_id}', [ResidentCon
 Route::post('resident/profile/{resident_id}', [ResidentController::class, 'postResidentProfile']);
 
 Route::post('notification/user_id/{user_id}', [LatePaymentNotificationController::class, 'getNotificationByUserId']);
+
+Route::post('notification/update_read_status/user_id/{user_id}', [LatePaymentNotificationController::class, 'changeNotificationReadStatusByUserId']);
