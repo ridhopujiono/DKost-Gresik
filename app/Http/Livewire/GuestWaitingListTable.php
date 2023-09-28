@@ -38,7 +38,7 @@ class GuestWaitingListTable extends Component
     {
         $resident = Resident::where('room_id', $guest->room_id)->where('user_id', $guest->user_id)->get();
         $result = [];
-        if(count($resident) > 0){
+        if (count($resident) > 0) {
             $result['status'] = 'error';
             $result['message'] = 'Penghuni yang sama sudah menempati kamar ini';
             return $result;
@@ -64,10 +64,19 @@ class GuestWaitingListTable extends Component
         $room = Room::find($guest->room_id);
 
         // Kurangi stok kamar dengan jumlah tertentu
-        $room->decrement('stock', 1);
+        if ($room->stock > 0) {
+            $room->decrement('stock', 1);
+            // Simpan perubahan
+            $room->save();
+        }
 
-        // Simpan perubahan
-        $room->save();
+        // Jika memang kamar sudah tidak tersisa jumlahnya atau 0
+        if ($room->stock < 1) {
+            $result['status'] = 'error';
+            $result['message'] = 'Mohon kamar ini sudah penuh. Anda tidak bisa menerima permintaan ini sementara waktu';
+            return $result;
+        }
+
 
         $result['status'] = 'success';
         return $result;
@@ -83,7 +92,7 @@ class GuestWaitingListTable extends Component
 
                 $insert = $this->insertResident($guest);
 
-                if($insert['status'] == 'error'){
+                if ($insert['status'] == 'error') {
                     return session()->flash('error', $insert['message']);
                 }
 
@@ -105,5 +114,4 @@ class GuestWaitingListTable extends Component
             session()->flash('error', 'Ada error disisi server. Pesan error: ' . $e->getMessage());
         }
     }
-
 }

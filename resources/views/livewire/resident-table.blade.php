@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th scope="col">No</th>
+                        <th scope="col">Checkout</th>
                         <th scope="col">Nama Kamar</th>
                         <th scope="col">Nama Penghuni</th>
                         <th scope="col">Terdaftar</th>
@@ -57,6 +58,19 @@
                         }
                     },
                     {
+                        data: 'is_checkout',
+                        name: 'is_checkout',
+                        render: function(data, type, full, meta) {
+                            if (data) {
+                                return `<div class="form-check form-switch">
+                                    <input  onchange='checkoutResident(${full['id']},${full['room']['id']},false)' class="form-check-input" type="checkbox" style="width: 3em;height: 1.7em;" checked /></div>`
+                            } else {
+                                return `<div class="form-check form-switch">
+                                    <input onchange='checkoutResident(${full['id']},${full['room']['id']},true)' class="form-check-input" type="checkbox" style="width: 3em;height: 1.7em;" /></div>`
+                            }
+                        },
+                    },
+                    {
                         data: 'room.room_name',
                         name: 'room_name',
                         searchable: true
@@ -70,7 +84,7 @@
                         data: 'registered_at',
                         name: 'registered_at',
                         searchable: true,
-                        render: function (data){
+                        render: function(data) {
                             return data;
                         }
                     },
@@ -131,6 +145,10 @@
             Livewire.on('needRefresh', () => {
                 dataTable.ajax.reload()
             });
+
+            function checkoutResident(resident_id, room_id, isChecked) {
+                Livewire.emit('triggerCheckoutResident', resident_id, room_id, isChecked)
+            }
         </script>
     @endpush
-    </div>
+</div>

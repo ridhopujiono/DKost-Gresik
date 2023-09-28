@@ -26,6 +26,13 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="form-group mb-3">
+                    <label id="amount" class="form-label">Nominal</label>
+                    <input type="text" class="form-control @error('amount') is-invalid @enderror" wire:model='amount' placeholder="200.000">
+                    @error('amount')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
                 <div class="d-flex justify-content-between">
                     <a href="{{ url('payments') }}" class="btn btn-light border"><span
                             class="bx bx-chevron-left"></span>Kembali
