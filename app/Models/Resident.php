@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Mail\LateNotificationMail;
+use App\Jobs\LateNotificationMailJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 
 class Resident extends Model
 {
@@ -57,8 +56,7 @@ class Resident extends Model
                     'notification_content' => "Telat Pembayaran Kamar <b>" . $this->room->room_name . "</b>",
                     'read_status' => false,
                 ]);
-
-                Mail::to($this->user->email)->send(new LateNotificationMail($this->room->room_name));
+                dispatch(new LateNotificationMailJob($this->user->email, $this->room->room_name));
             }
         }
     }

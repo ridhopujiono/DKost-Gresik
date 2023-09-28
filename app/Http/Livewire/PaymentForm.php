@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Mail\PaymentAcceptedMail;
+use App\Jobs\PaymentAcceptedMailJob;
 use App\Models\Payment;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class PaymentForm extends Component
@@ -63,7 +62,7 @@ class PaymentForm extends Component
                 $payment = Payment::find($this->paymentId);
                 if ($payment) {
                     if ($validate['verification_status'] == 'terverifikasi') {
-                        Mail::to($payment->resident->user->email)->send(new PaymentAcceptedMail($payment->resident->room->room_name));
+                        dispatch(new PaymentAcceptedMailJob($payment->resident->user->email, $payment->resident->room->room_name));
                     }
                     $payment->update($validate);
                     session()->flash('success', 'Berhasil mengubah data');

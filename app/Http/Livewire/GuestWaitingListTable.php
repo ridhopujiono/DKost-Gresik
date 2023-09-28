@@ -2,12 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Mail\AcceptRoomReservation;
+use App\Jobs\AcceptRoomReservationMailJob;
 use App\Models\GuestWaitingList;
 use App\Models\Resident;
 use App\Models\Room;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class GuestWaitingListTable extends Component
@@ -97,7 +96,8 @@ class GuestWaitingListTable extends Component
                 }
 
                 // Send Email
-                Mail::to($guest->user->email)->send(new AcceptRoomReservation($guest->room->room_name));
+                dispatch(new AcceptRoomReservationMailJob($guest->user->email, $guest->room->room_name));
+
                 $this->dispatchBrowserEvent('hide-alert');
 
                 session()->flash('success', 'Pengajuan diterima, Pemesan akan mendapatkan email pemberitahuan untuk pelunasan');
