@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendNotificationBookingRoomJob;
 use App\Models\GuestWaitingList;
 use App\Models\Room;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,16 @@ class RoomController extends Controller
     public function reservation(Request $request, $room_id, $user_id, $type = "booking") // $type = "booking", "full_booked"
     {
         try {
+
+            $user = User::find($user_id);
+
+            if ($user->email_verified_at == NULL) {
+                return response()->json([
+                    "success" => false,
+                    "data" => "Maaf email anda belum terverifikasi"
+                ]);
+            }
+
             $guest_waiting_lists = GuestWaitingList::where('user_id', $user_id)
                 ->where('room_id', $room_id)
                 ->whereIn('status', ['menunggu', 'full_booked'])
@@ -82,7 +93,7 @@ class RoomController extends Controller
 
                 return response()->json([
                     "success" => true,
-                    "data" => $type == "booking" ? "Berhasil mengajukan kamar. Anda melihat status pengajuan kamar di menu Kamar Saya" : "Terimakasih, Anda akan dihubungi jika kamar sudah tersedia"
+                    "data" => $type == "booking" ? "Berhasil mengajukan kamar. Anda dapat melihat status pengajuan kamar di menu Kamar Saya" : "Terimakasih, Anda akan dihubungi jika kamar sudah tersedia"
                 ]);
             }
         } catch (\Exception $e) {
