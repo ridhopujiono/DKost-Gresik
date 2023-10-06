@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Manajemen Kost | Dkost</title>
+    <title>Rumah Sidqia | Manajemen Kost </title>
 
     <meta name="description" content="" />
 
@@ -62,6 +62,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('themes/assets/js/config.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo.ico') }}">
   </head>
 
   <body>
@@ -74,10 +75,10 @@
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
-              <div class="app-brand justify-content-start">
+              <div class="app-brand justify-content-center">
                 <a href="" class="app-brand-link gap-2">
-                  <span class="app-brand-logo demo">
-                    <img src="{{ asset('logo.png') }}" width="250px"/>
+                  <span class="app-brand-logo">
+                    <img src="{{ asset('logo.png') }}" width="100px"/>
                   </span>
                 </a>
               </div>

@@ -29,10 +29,10 @@
 
     <title>Rumah Sidqia | {{ $title }}</title>
 
-    <meta name="description" content="" />
+    <meta name="description" content="Rumah Sidqia | Manajemen Kost" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('themes/assets/img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo.ico') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

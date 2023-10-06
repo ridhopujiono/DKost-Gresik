@@ -2,7 +2,7 @@
     <div class="app-brand demo" style="padding-left: 1rem;">
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{ asset('logo.png') }}" width="180px" alt="">
+                <img src="{{ asset('logo.png') }}" height="80px" alt="">
             </span>
         </a>
 
