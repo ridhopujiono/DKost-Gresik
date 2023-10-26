@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ResidentController extends Controller
 {
@@ -23,7 +24,7 @@ class ResidentController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => Resident::with('room')->where('user_id', $user_id)->orderBy('created_at', 'desc')->get()
+            'data' => Resident::with('room', 'room.roomImages')->where('user_id', $user_id)->orderBy('created_at', 'desc')->get()
         ], 200);
     }
     public function getResidentPaymentHistoriesByResidentId($resident_id)
@@ -63,22 +64,41 @@ class ResidentController extends Controller
     public function postResidentProfile(Request $request, $resident_id)
     {
         try {
-
+            $response = Cloudinary::upload($request->file('ktp_image')->getRealPath(), [
+                'folder' => 'ktp_image', // Folder di Cloudinary
+                'quality' => 'auto:low', // Kualitas kompresi
+            ]);
+            if (!$response) {
+                return response()->json([
+                    'success' => false,
+                    'data' => 'Gagal unggah bukti pembayaran'
+                ], 400);
+            }
             // Save DB
             Resident::find($resident_id)->update([
                 'name' => $request->input('name'),
                 'address' => $request->input('address'),
                 'contact' => $request->input('contact'),
-                'emergency_info' => $request->input('emergency_info'),
+                'emergency_info' => [
+                    'contact_name' => $request->input('contact_name'),
+                    'contact_number' => $request->input('contact_number'),
+                ],
+                'ktp_number' => $request->input('ktp_number'),
+                'ktp_image' => $response->getSecurePath(),
+                'job' => $request->input('job'),
+                'institute' => $request->input('institute'),
+                'institute_address' => $request->input('institute_address'),
+                'vehicle' => $request->input('vehicle'),
+                'vehicle_number' => $request->input('vehicle_number'),
             ]);
             return response()->json([
                 'success' => true,
-                'data' => 'Berhasil unggah bukti pembayaran'
+                'data' => 'Berhasil ubah profile pengguna'
             ], 200);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'data' => "Gagal unggah bukti pembayaran. Error: " . $e->getMessage()
+                'data' => $e->getMessage()
             ], 500);
         }
     }

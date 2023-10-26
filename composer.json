@@ -12,6 +12,7 @@
         "jenssegers/date": "^4.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
+        "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^1.1",

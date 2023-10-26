@@ -8,10 +8,10 @@
 
     @include('admin.layouts.toast_flash_message')
 
-    <div class="row justify-content-between align-items-center py-3">
-        <div class="col-6">
-            <h4 class="card-title">{{ $sub_title }}</h4>
-        </div>
+    <div class="d-flex justify-content-between align-items-center py-3">
+        <h4 class="card-title">{{ $sub_title }}</h4>
+        <a href="{{ url('residents/create') }}" class="btn btn-primary">Tambah Penghuni <span
+                class="bx bx-plus"></span></a>
     </div>
     <div wire:ignore class="card">
         <div class="card-body">

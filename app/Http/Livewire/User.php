@@ -20,6 +20,7 @@ class User extends Component
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+        $credentials['level'] = 'admin';
 
         if (Auth::attempt($credentials)) {
             return redirect('locations');

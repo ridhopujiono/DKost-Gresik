@@ -15,7 +15,7 @@
                         $extension = pathinfo($image->image, PATHINFO_EXTENSION);
                     @endphp
 
-                    @if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
+                    @if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
                         <!-- Ini adalah gambar -->
                         <img src="{{ $image->image }}" alt="Image" height="200px" class="mb-3">
                     @elseif (in_array($extension, ['mp4', 'avi', 'mov', 'wmv']))
@@ -26,26 +26,27 @@
                         </video>
                     @endif
                 @endforeach
-                <div class="form-group"><button type='button' class="btn btn-primary" wire:click='addFile'>Tambah
-                        File</button></div>
-                @foreach ($files as $index => $file)
-                    <div class="form-group mt-3 mb-3">
-                        <div class="d-flex justify-content-between gap-2">
-                            <input class="form-control" type="file" wire:model="files.{{ $index }}"
-                                width="90%" accept="image/*, video/*" />
-                            <button type="button" class="btn btn-danger"
-                                wire:click="removeFile({{ $index }})"><span class="bx bx-trash"></span></button>
-                        </div>
+                <div class="form-group mt-3 mb-3">
+                    <div class="d-flex justify-content-between gap-2">
+                        <input class="form-control" type="file" wire:model="file" width="90%"
+                            accept="image/*, video/*" />
                     </div>
-                @endforeach
-                @if (count($files) > 0)
-                    <div class="form-group mb-3">
-                        <button type="submit" class="btn btn-primary">Simpan
-                            <span class="bx bx-save"></span></button>
+                </div>
+                <div class="form-group mt-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input " type="checkbox" name="isCover" wire:model="isCover"
+                            checked="false">
+                        <label class="form-check-label" for="checkbox-1">
+                            Jadikan sampul
+                        </label>
                     </div>
-                @endif
-
-
+                </div>
+                <div class="form-group mb-3">
+                    <button type="submit" class="btn btn-primary">Simpan
+                        <span class="bx bx-save"></span></button>
+                    <button type="button" wire:click='destroyImage' class="btn btn-danger">Hapus Semua
+                        <span class="bx bx-trash"></span></button>
+                </div>
             </form>
         </div>
     </div>

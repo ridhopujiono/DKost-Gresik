@@ -20,6 +20,13 @@ class Resident extends Model
         'contract_start',
         'contract_end',
         'payment_status',
+        'ktp_number',
+        'ktp_image',
+        'job',
+        'institute',
+        'institute_address',
+        'vehicle',
+        'vehicle_number',
         'late_status',
         'is_checkout',
         'user_id'
