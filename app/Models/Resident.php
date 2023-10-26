@@ -53,17 +53,27 @@ class Resident extends Model
         $end_date = Carbon::parse($this->contract_end);
 
         if ($current_date->greaterThan($end_date)) {
-            if ($this->late_status == 0 && $this->is_checkout == 0) {
+            if ($this->is_checkout == 0) {
                 $this->update(['payment_status' => 'belum_lunas']);
                 $this->update(['late_status' => true]);
 
-                LatePaymentNotification::create([
-                    'resident_id' => $this->id,
-                    'notification_date' => Carbon::now(),
-                    'notification_content' => "Telat Pembayaran Kamar <b>" . $this->room->room_name . "</b>",
-                    'read_status' => false,
-                ]);
-                dispatch(new LateNotificationMailJob($this->user->email, $this->room->room_name));
+                // Cek jika telah telat lebih dari 3 hari
+                $daysLate = $current_date->diffInDays($end_date);
+                if ($daysLate > 3) {
+                    dispatch(new LateNotificationMailJob($this->user->email, $this->room->room_name, true));
+                    // Hapus resident
+                    Payment::where('resident_id', $this->id)->delete();
+                    LatePaymentNotification::where('resident_id', $this->id)->delete();
+                    $this->delete();
+                } else {
+                    LatePaymentNotification::create([
+                        'resident_id' => $this->id,
+                        'notification_date' => Carbon::now(),
+                        'notification_content' => "Telat Pembayaran Kamar <b>" . $this->room->room_name . "</b>",
+                        'read_status' => false,
+                    ]);
+                    dispatch(new LateNotificationMailJob($this->user->email, $this->room->room_name, false));
+                }
             }
         }
     }

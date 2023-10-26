@@ -17,15 +17,17 @@ class LateNotificationMailJob implements ShouldQueue
 
     public $email;
     public $room_name;
+    public $deleted;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($email, $room_name)
+    public function __construct($email, $room_name, $deleted)
     {
         $this->email = $email;
         $this->room_name = $room_name;
+        $this->deleted = $deleted;
     }
 
 
@@ -36,6 +38,6 @@ class LateNotificationMailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->email)->send(new LateNotificationMail($this->room_name));
+        Mail::to($this->email)->send(new LateNotificationMail($this->room_name, $this->deleted));
     }
 }

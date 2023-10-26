@@ -58,19 +58,28 @@
     <body>
         <div class="container">
             <div class="header">
-                <h1>Pemberitahuan Telat Pembayaran</h1>
+                <h1>{{ $deleted ? 'Pemberitahuan Penghapusan Akses Kamar' : 'Pemberitahuan Telat Pembayaran' }}</h1>
             </div>
-            <div class="content">
-                <p>Pembayaran kamar <b> {{ $room_name ?? '' }} </b> yang anda huni dinyatakan <b style='color: red'>TELAT</b>,
-                    Segera
-                    lakukan pelunasan dan
-                    silahkan cek pada menu
-                    <b>Kamar
-                        Saya</b>
-                </p>
-                <br>
-                <p>Silakan hubungi kami jika Anda memiliki pertanyaan atau memerlukan informasi tambahan.</p>
-            </div>
+            @if (!$deleted)
+                <div class="content">
+                    <p>Pembayaran kamar <b> {{ $room_name ?? '' }} </b> yang anda huni dinyatakan <b
+                            style='color: red'>TELAT</b>,
+                        Segera
+                        lakukan pelunasan dan
+                        silahkan cek pada menu
+                        <b>Kamar
+                            Saya</b>
+                    </p>
+                    <br>
+                    <p>Jika dalam 3 hari anda belum melakukan pelunasan, akses kamar akan dihapus disistem.</p>
+                </div>
+            @else
+                <div class="content">
+                    <p>Akses Kamar <b> {{ $room_name ?? '' }} </b> yang anda huni dinyatakan <b
+                            style='color: red'>DIHAPUS</b>
+                    </p>
+                </div>
+            @endif
             <div class="footer">
                 <p>Terima kasih atas perhatian Anda.</p>
             </div>

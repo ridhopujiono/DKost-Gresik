@@ -13,14 +13,16 @@ class LateNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $room_name;
+    public $deleted;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($room_name)
+    public function __construct($room_name, $deleted)
     {
         $this->room_name = $room_name;
+        $this->deleted = $deleted;
     }
 
     /**
