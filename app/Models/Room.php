@@ -15,9 +15,8 @@ class Room extends Model
         'room_type',
         'capacity',
         'price',
-        'stock',
         'description',
-        'room_status'
+        'is_reserved'
     ];
     public function location()
     {

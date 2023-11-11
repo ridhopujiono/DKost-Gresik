@@ -122,7 +122,7 @@
                         <input wire:model="ktp_image" type="file"
                             class="form-control @error('ktp_image') is-invalid  @enderror" name="ktp_image" />
                     @endif
-                    <img src="{{ $ktp_image }}" alt="">
+                    <img src="{{ $ktp_image }}" style="max-width: 400px" alt="">
                     @error('ktp_image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

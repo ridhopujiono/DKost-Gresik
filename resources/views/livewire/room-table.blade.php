@@ -28,7 +28,7 @@
                         <th scope="col">Nama Lokasi</th>
                         <th scope="col">Nama Kamar</th>
                         <th scope="col">Tipe Kamar</th>
-                        <th scope="col">Sisa Kamar</th>
+                        <th scope="col">Status Kamar</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -141,8 +141,11 @@
 
                     },
                     {
-                        data: 'stock', // Nama kolom yang telah disertakan dalam respons JSON
-                        name: 'stock'
+                        data: 'is_reserved', // Nama kolom yang telah disertakan dalam respons JSON
+                        name: 'is_reserved',
+                        render: function(data) {
+                            return `<div class="badge bg-${data ? 'danger' : 'success'}">${data ? 'penuh' : 'tersedia'}</div>`;
+                        }
                     },
                     {
                         data: 'action', // Nama kolom yang telah disertakan dalam respons JSON

@@ -17,7 +17,7 @@ class ResidentController extends Controller
 
         if (request()->ajax()) {
 
-            $residents = Resident::with('room')->orderBy('created_at', 'asc')->get();
+            $residents = Resident::with('room')->orderBy('created_at', 'desc')->get();
             return datatables()->of($residents)
                 ->addColumn('action', function ($resident) {
                     return '<div class="flex">

@@ -64,16 +64,24 @@ class ResidentController extends Controller
     public function postResidentProfile(Request $request, $resident_id)
     {
         try {
-            $response = Cloudinary::upload($request->file('ktp_image')->getRealPath(), [
-                'folder' => 'ktp_image', // Folder di Cloudinary
-                'quality' => 'auto:low', // Kualitas kompresi
-            ]);
-            if (!$response) {
-                return response()->json([
-                    'success' => false,
-                    'data' => 'Gagal unggah bukti pembayaran'
-                ], 400);
+            $image = '';
+            if ($request->ktp_image) {
+                $response = Cloudinary::upload($request->file('ktp_image')->getRealPath(), [
+                    'folder' => 'ktp_image', // Folder di Cloudinary
+                    'quality' => 'auto:low', // Kualitas kompresi
+                ]);
+                if (!$response) {
+                    return response()->json([
+                        'success' => false,
+                        'data' => 'Gagal unggah bukti pembayaran'
+                    ], 400);
+                }
+                $image = $response->getSecurePath();
+            } else {
+                $image = Resident::find($resident_id)->ktp_image;
             }
+
+
             // Save DB
             Resident::find($resident_id)->update([
                 'name' => $request->input('name'),
@@ -84,7 +92,7 @@ class ResidentController extends Controller
                     'contact_number' => $request->input('contact_number'),
                 ],
                 'ktp_number' => $request->input('ktp_number'),
-                'ktp_image' => $response->getSecurePath(),
+                'ktp_image' => $image,
                 'job' => $request->input('job'),
                 'institute' => $request->input('institute'),
                 'institute_address' => $request->input('institute_address'),

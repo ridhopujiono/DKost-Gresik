@@ -43,48 +43,54 @@ class GuestWaitingListTable extends Component
             return $result;
         }
 
-        $insert_resident = Resident::create([
-            'user_id' => $guest->user_id,
-            'room_id' => $guest->room_id,
-            'name' => $guest->guest_name,
-            'address' => '-',
-            'contact' => $guest->guest_contact,
-            'emergency_info' => [
-                "contact_name" => "",
-                "contact_number" => ""
-            ],
-            'contract_start' => $guest->request_date,
-            'contract_end' => Carbon::parse($guest->request_date),
-            'payment_status' => 'belum_lunas',
-            'late_status' => 1
-        ]);
-
-        //Ambil data kamar berdasarkan ID
+        // Ambil data kamar berdasarkan ID
         $room = Room::find($guest->room_id);
 
-        // Kurangi stok kamar dengan jumlah tertentu
-        if ($room->stock > 0) {
-            $room->decrement('stock', 1);
-            // Simpan perubahan
+        // Jika kamar tidak sedang di reservasi
+        if (!$room->is_reserved) {
+            $room->is_reserved = true;
             $room->save();
+            GuestWaitingList::find($guest->id)->delete();
+
+
+            $insert_resident = Resident::create([
+                'user_id' => $guest->user_id,
+                'room_id' => $guest->room_id,
+                'name' => $guest->guest_name,
+                'address' => '-',
+                'contact' => $guest->guest_contact,
+                'emergency_info' => [
+                    "contact_name" => "",
+                    "contact_number" => ""
+                ],
+                'contract_start' => $guest->request_date,
+                'contract_end' => Carbon::parse($guest->request_date),
+                'payment_status' => 'belum_lunas',
+                'late_status' => 1
+            ]);
+
+
+            $result['status'] = 'success';
+            $result['message'] = 'Berhasil mendaftarkan penghuni';
+            return $result;
         }
 
-        // Jika memang kamar sudah tidak tersisa jumlahnya atau 0
-        if ($room->stock < 1) {
+        // Jika memang kamar sudah direservasi
+        if ($room->is_reserved) {
             $result['status'] = 'error';
             $result['message'] = 'Mohon kamar ini sudah penuh. Anda tidak bisa menerima permintaan ini sementara waktu';
             return $result;
         }
-
-
-        $result['status'] = 'success';
-        return $result;
     }
     public function update($guestId, $isChecked)
     {
         try {
-
             $guest = GuestWaitingList::find($guestId);
+            $room = Room::find($guest->room_id);
+
+            if ($room->is_reserved) {
+                return session()->flash('error', 'Maaf kamar sedang ditempati');
+            }
 
             if ($isChecked) {
                 $guest->status = 'diterima'; // Atur status menjadi 'diterima' jika checkbox diaktifkan

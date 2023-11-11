@@ -2,9 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\GuestWaitingList;
 use App\Models\Location;
+use App\Models\Payment;
+use App\Models\Resident;
 use App\Models\Room;
 use App\Models\RoomFacility;
+use App\Models\RoomImage;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -51,7 +55,6 @@ class RoomTable extends Component
     public function delete($roomId)
     {
         try {
-            RoomFacility::where('room_id', $roomId)->delete();
             Room::find($roomId)->delete();
             $this->emit('needRefresh');
             session()->flash('success', 'Berhasil menghapus item');

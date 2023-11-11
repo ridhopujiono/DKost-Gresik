@@ -119,13 +119,12 @@ class ResidentForm extends Component
             'institute' => 'required',
             'institute_address' => 'required',
             'vehicle' => 'required',
-            'vehicle_number' => 'required'
+            'vehicle_number' => 'nullable'
         ]);
         $validate['emergency_info'] = [
             "contact_name" => $validate['contact_name'],
             "contact_number" => $validate['contact_number']
         ];
-
 
         // Logika untuk mode "edit"
         if ($this->editMode) {
@@ -191,6 +190,7 @@ class ResidentForm extends Component
                     'contract_end' => $this->contract_end,
                     'late_status' => $validate['late_status'] = $validate['payment_status'] == "lunas" ? 0 : 1
                 ]);
+                Room::find($this->room_id)->update(['is_reserved' => true]);
                 session()->flash('success', 'Berhasil mengunggah penghuni');
             } catch (Exception $e) {
                 return session()->flash('error', 'Ada error disisi server. Pesan error: ' . $e->getMessage());
@@ -199,7 +199,7 @@ class ResidentForm extends Component
     }
     public function updatedLocationSelected()
     {
-        $this->rooms = Room::where('location_id', $this->locationSelected)->get();
+        $this->rooms = Room::where('location_id', $this->locationSelected)->where('is_reserved', false)->get();
     }
     public function updatedContractStart()
     {

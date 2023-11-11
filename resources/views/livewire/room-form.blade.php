@@ -6,6 +6,15 @@
 
     @include('admin.layouts.toast_flash_message')
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-6 mb-3">
@@ -73,29 +82,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="stock" class="form-label">Jumlah Kamar Tersedia</label>
-                            <input {{ $showMode ? 'disabled' : '' }} wire:model='stock' type="number"
-                                class="form-control @error('stock')
-                            is-invalid @enderror"
-                                name="stock" value="{{ $stock }}" /> @error('stock')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group mb-3">
-                            <label id="room_type" class="form-label">Pilih Status Kamar</label>
-                            <select {{ $showMode ? 'disabled' : '' }} id="room_type"
-                                class="form-select @error('roomStatusSelected') is-invalid @enderror"
-                                wire:model='roomStatusSelected'>
-                                <option>SILAHKAN PILIH STATUS KAMAR</option>
-                                <option {{ $room_status == 'tersedia' ? 'selected' : '' }} value="tersedia">Tersedia
-                                </option>
-                                <option {{ $room_status == 'penuh' ? 'selected' : '' }} value="penuh">Penuh</option>
-                            </select>
-                            @error('roomStatusSelected')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
                 </div>
             </div>
         </div>
@@ -140,8 +126,8 @@
                                 class="bx bx-chevron-left"></span>Kembali
                         </a>
                         @if (!$showMode)
-                            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
-                                Simpan <span class="bx bx-save"></span>
+                            <button type="submit" class="btn btn-primary" wire:loading.class="disabled">
+                                Simpan <span class="bx bx-save ms-1"></span>
                             </button>
                         @endif
                     </div>

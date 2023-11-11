@@ -23,10 +23,7 @@ class RoomForm extends Component
     public $roomTypeSelected;
     public $capacity;
     public $price;
-    public $stock;
     public $description;
-    public $room_status;
-    public $roomStatusSelected;
     public $editMode = false; // Menentukan apakah dalam mode "edit"
     public $showMode = false; // Menentukan apakah dalam mode "show"
 
@@ -41,18 +38,15 @@ class RoomForm extends Component
             if ($room) {
                 $this->location_id = $room->location_id;
                 $this->room_type = $room->room_type;
-                $this->room_status = $room->room_status;
                 // timpa nilai selected dengan nilai database
                 $this->locationSelected = $room->location_id;
                 $this->roomTypeSelected = $room->room_type;
-                $this->roomStatusSelected = $room->room_status;
                 // 
                 $this->facility_ids = $room->roomFacilities->pluck('facility_id')->toArray();
                 $this->facilitySelected = $room->roomFacilities->pluck('facility_id')->toArray();
                 $this->room_name = $room->room_name;
                 $this->capacity = $room->capacity;
                 $this->price = (float) $room->price;
-                $this->stock = $room->stock;
                 $this->description = $room->description;
                 $this->editMode = true;
             }
@@ -81,27 +75,22 @@ class RoomForm extends Component
     {
         $this->locationSelected = '';
         $this->roomTypeSelected = '';
-        $this->roomStatusSelected = '';
         $this->facilitySelected = [];
         $this->room_name = '';
         $this->capacity = '';
         $this->price = '';
-        $this->stock = '';
         $this->description = '';
     }
     public function save()
     {
         // Simulasi delay 2 detik
         sleep(2);
-
         $validate = $this->validate([
             'locationSelected' => 'required',
             'roomTypeSelected' => 'required',
-            'roomStatusSelected' => 'required',
             'room_name' => 'required|min:3|max:100',
             'capacity' => 'required|max:10',
             'price' => 'required|min:3|max:20',
-            'stock' => 'required|max:10',
             'description' => 'required',
         ]);
         if (!$this->editMode) {
@@ -113,12 +102,10 @@ class RoomForm extends Component
                     'room_type' => $validate['roomTypeSelected'],
                     'capacity' => $validate['capacity'],
                     'price' => str_replace('.', '', $validate['price']),
-                    'stock' => $validate['stock'],
                     'description' => $validate['description'],
-                    'room_status' => $validate['roomStatusSelected'],
                 ]);
                 // then insert to room_facility
-                foreach ($validate['facilitySelected'] as $facility_id) {
+                foreach ($this->facilitySelected as $facility_id) {
                     RoomFacility::create([
                         "room_id" => $insert->id,
                         "facility_id" => $facility_id
@@ -140,9 +127,7 @@ class RoomForm extends Component
                         'room_type' => $validate['roomTypeSelected'],
                         'capacity' => $validate['capacity'],
                         'price' => str_replace('.', '', $validate['price']),
-                        'stock' => $validate['stock'],
                         'description' => $validate['description'],
-                        'room_status' => $validate['roomStatusSelected'],
                     ]);
                     RoomFacility::where('room_id', $this->roomId)->delete();
                     // then insert to room_facility

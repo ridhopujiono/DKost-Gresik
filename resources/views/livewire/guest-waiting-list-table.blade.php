@@ -46,7 +46,7 @@
                         <th scope="col">Nama Lengkap</th>
                         <th scope="col">Kontak</th>
                         <th scope="col">Tanggal Permintaan</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Status Kamar</th>
                         <th scope="col">Diterima</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -80,7 +80,7 @@
                     },
                     {
                         data: 'room.room_name',
-                        name: 'room.room_name'
+                        name: 'room.room_name',
                     },
                     {
                         data: 'guest_name',
@@ -95,8 +95,11 @@
                         name: 'request_date'
                     },
                     {
-                        data: 'status',
-                        name: 'status'
+                        data: 'room.is_reserved',
+                        name: 'room.is_reserved',
+                        render: function(data, type, full, meta) {
+                            return `<div class="badge bg-${data ? 'danger' : 'success'}">${data ? 'Penuh' : 'Tersedia'}</div>`
+                        }
                     },
                     {
                         data: 'status',
@@ -107,7 +110,7 @@
                                 <input onchange='updateBookStatus(${full['id']},true)' class="form-check-input" type="checkbox" style="width: 3em;height: 1.7em;" /></div>`
                             } else {
                                 return `<div class="form-check form-switch">
-                                <input  onchange='updateBookStatus(${full['id']},false)' class="form-check-input" type="checkbox" style="width: 3em;height: 1.7em;" checked /></div>`
+                                <input onchange='updateBookStatus(${full['id']},false)' class="form-check-input" type="checkbox" style="width: 3em;height: 1.7em;" checked /></div>`
                             }
                         },
                     },
@@ -137,10 +140,8 @@
             });
 
             function updateBookStatus(id, isChecked) {
-                if (isChecked) {
-                    document.getElementById('loadingAlert').classList.remove('d-none')
-                }
                 Livewire.emit('triggerUpdate', id, isChecked)
+                dataTable.ajax.reload()
             }
 
             document.addEventListener('hide-alert', function() {

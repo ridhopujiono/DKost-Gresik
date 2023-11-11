@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\LatePaymentNotification;
-use App\Models\Payment;
 use App\Models\Resident;
 use App\Models\Room;
 use Exception;
@@ -24,9 +22,10 @@ class ResidentTable extends Component
     public function delete($residentId)
     {
         try {
-            Payment::where('resident_id', $residentId)->delete();
-            LatePaymentNotification::where('resident_id', $residentId)->delete();
-            Resident::find($residentId)->delete();
+            $resident = Resident::find($residentId);
+            Room::find($resident->room_id)->update(['is_reserved' => false]);
+            $resident->delete();
+
             $this->emit('needRefresh');
             session()->flash('success', 'Berhasil menghapus item');
         } catch (Exception $e) {
@@ -41,10 +40,11 @@ class ResidentTable extends Component
                 'is_checkout' => $hasCheckout
             ]);
             if ($hasCheckout) {
-                Room::find($room_id)->increment('stock', 1);
+                Room::find($room_id)->update(['is_reserved' => false]);
                 session()->flash('success', 'Berhasil checkout penghuni');
             } else {
-                Room::find($room_id)->decrement('stock', 1);
+                Room::find($room_id)->update(['is_reserved' => true]);
+                session()->flash('success', 'Berhasil uncheckout penghuni');
             }
 
             $this->emit('needRefresh');
