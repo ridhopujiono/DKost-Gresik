@@ -53,7 +53,7 @@ class Resident extends Model
         $end_date = Carbon::parse($this->contract_end);
 
         if ($current_date->greaterThan($end_date)) {
-            if ($this->is_checkout == 0) {
+            if (!$this->is_checkout) {
                 $this->update(['payment_status' => 'belum_lunas']);
                 $this->update(['late_status' => true]);
 
@@ -64,7 +64,7 @@ class Resident extends Model
                     // Hapus resident
                     Payment::where('resident_id', $this->id)->delete();
                     LatePaymentNotification::where('resident_id', $this->id)->delete();
-                    Room::find($this->room_id)->update(['is_reserved', false]);
+                    Room::find($this->room_id)->update(['is_reserved' => false]);
                     $this->delete();
                 } else {
                     LatePaymentNotification::create([
