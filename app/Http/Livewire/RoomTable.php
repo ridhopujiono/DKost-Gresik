@@ -47,6 +47,15 @@ class RoomTable extends Component
         $newRoom = $room->replicate();
         $newRoom->created_at = Carbon::now();
         $newRoom->save();
+        $newRoomId = $newRoom->id;
+
+        $facilities = RoomFacility::where('room_id', $room->id)->get();
+
+        foreach ($facilities as $item) {
+            $clone = $item->replicate(); // Membuat salinan
+            $clone->room_id = $newRoomId; // Mengubah room_id
+            $clone->save(); // Menyimpan clone ke dalam database
+        }
 
         sleep(2);
         return redirect('rooms' . '/' . $newRoom->id . '/edit')->with('success', 'Berhasil duplikasi kamar. Silahkan edit kamar baru anda');
