@@ -144,7 +144,7 @@
                         data: 'is_reserved', // Nama kolom yang telah disertakan dalam respons JSON
                         name: 'is_reserved',
                         render: function(data) {
-                            return `<div class="badge bg-${data ? 'danger' : 'success'}">${data ? 'penuh' : 'tersedia'}</div>`;
+                            return `<div class="badge bg-${data === 0 ? 'danger' : 'success'}">${data === 0 ? 'penuh' : 'tersedia'}</div>`;
                         }
                     },
                     {
