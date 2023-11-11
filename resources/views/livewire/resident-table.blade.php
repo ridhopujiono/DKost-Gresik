@@ -61,7 +61,7 @@
                         data: 'is_checkout',
                         name: 'is_checkout',
                         render: function(data, type, full, meta) {
-                            if (data === 1) {
+                            if (parseInt(data) === 1) {
                                 return `<div class="form-check form-switch">
                                     <input  onchange='checkoutResident(${full['id']},${full['room']['id']},false)' class="form-check-input" type="checkbox" style="width: 3em;height: 1.7em;" checked /></div>`
                             } else {
