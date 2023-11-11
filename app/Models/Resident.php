@@ -64,6 +64,7 @@ class Resident extends Model
                     // Hapus resident
                     Payment::where('resident_id', $this->id)->delete();
                     LatePaymentNotification::where('resident_id', $this->id)->delete();
+                    Room::find($this->room_id)->update(['is_reserved', false]);
                     $this->delete();
                 } else {
                     LatePaymentNotification::create([
